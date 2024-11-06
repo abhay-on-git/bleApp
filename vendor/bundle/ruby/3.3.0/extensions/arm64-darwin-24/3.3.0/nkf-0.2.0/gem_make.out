@@ -1,0 +1,18 @@
+current directory: /Users/sanket/Desktop/ble-plx/BLEApp/vendor/bundle/ruby/3.3.0/gems/nkf-0.2.0/ext/nkf
+/Users/sanket/.rbenv/versions/3.3.5/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /Users/sanket/Desktop/ble-plx/BLEApp/vendor/bundle/ruby/3.3.0/gems/nkf-0.2.0/ext/nkf
+make DESTDIR\= sitearchdir\=./.gem.20241105-35632-1ubdq2 sitelibdir\=./.gem.20241105-35632-1ubdq2 clean
+
+current directory: /Users/sanket/Desktop/ble-plx/BLEApp/vendor/bundle/ruby/3.3.0/gems/nkf-0.2.0/ext/nkf
+make DESTDIR\= sitearchdir\=./.gem.20241105-35632-1ubdq2 sitelibdir\=./.gem.20241105-35632-1ubdq2
+compiling nkf.c
+linking shared-object nkf.bundle
+
+current directory: /Users/sanket/Desktop/ble-plx/BLEApp/vendor/bundle/ruby/3.3.0/gems/nkf-0.2.0/ext/nkf
+make DESTDIR\= sitearchdir\=./.gem.20241105-35632-1ubdq2 sitelibdir\=./.gem.20241105-35632-1ubdq2 install
+/usr/bin/install -c -m 0755 nkf.bundle ./.gem.20241105-35632-1ubdq2
+
+current directory: /Users/sanket/Desktop/ble-plx/BLEApp/vendor/bundle/ruby/3.3.0/gems/nkf-0.2.0/ext/nkf
+make DESTDIR\= sitearchdir\=./.gem.20241105-35632-1ubdq2 sitelibdir\=./.gem.20241105-35632-1ubdq2 clean

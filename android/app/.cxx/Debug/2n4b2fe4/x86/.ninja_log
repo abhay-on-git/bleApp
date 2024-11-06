@@ -1,0 +1,18 @@
+# ninja log v5
+2	105	0	C:/Users/abhay/Downloads/BLEApp/android/app/.cxx/Debug/2n4b2fe4/x86/CMakeFiles/cmake.verify_globs	69b765cdecbd9ccd
+10731	14318	7525882819868753	BlePlx_autolinked_build/CMakeFiles/react_codegen_BlePlx.dir/react/renderer/components/BlePlx/States.cpp.o	af65a6290445913a
+14	4422	7526008341125487	CMakeFiles/appmodules.dir/C_/Users/abhay/Downloads/BLEApp/android/app/build/generated/autolinking/src/main/jni/autolinking.cpp.o	2af218b956171e0e
+1088	5809	7526008354955141	CMakeFiles/appmodules.dir/OnLoad.cpp.o	e55a273db154c09c
+5140	12142	7525882781811786	BlePlx_autolinked_build/CMakeFiles/react_codegen_BlePlx.dir/react/renderer/components/BlePlx/ComponentDescriptors.cpp.o	2a0a7b97a1859e27
+2074	12137	7525882747912679	BlePlx_autolinked_build/CMakeFiles/react_codegen_BlePlx.dir/react/renderer/components/BlePlx/BlePlxJSI-generated.cpp.o	9ff5a8c3830e8c16
+3640	12139	7525882763776498	BlePlx_autolinked_build/CMakeFiles/react_codegen_BlePlx.dir/BlePlx-generated.cpp.o	c4de64bbc0370cd1
+7109	12146	7525882787023729	BlePlx_autolinked_build/CMakeFiles/react_codegen_BlePlx.dir/react/renderer/components/BlePlx/EventEmitters.cpp.o	3342b83dad2ef62f
+8394	13201	7525882808688277	BlePlx_autolinked_build/CMakeFiles/react_codegen_BlePlx.dir/react/renderer/components/BlePlx/Props.cpp.o	7ea7def5c847748c
+9537	13930	7525882816004484	BlePlx_autolinked_build/CMakeFiles/react_codegen_BlePlx.dir/react/renderer/components/BlePlx/ShadowNodes.cpp.o	1b0634c6293c3bc8
+5810	9254	7526008389473727	C:/Users/abhay/Downloads/BLEApp/android/app/build/intermediates/cxx/Debug/2n4b2fe4/obj/x86/libappmodules.so	22be8fe735c4ba1c
+101	407	7526013010366456	build.ninja	56eadb5b7cd3181d
+2	120	0	C:/Users/abhay/Downloads/BLEApp/android/app/.cxx/Debug/2n4b2fe4/x86/CMakeFiles/cmake.verify_globs	69b765cdecbd9ccd
+2	104	0	C:/Users/abhay/Downloads/BLEApp/android/app/.cxx/Debug/2n4b2fe4/x86/CMakeFiles/cmake.verify_globs	69b765cdecbd9ccd
+6	132	0	C:/Users/abhay/Downloads/BLEApp/android/app/.cxx/Debug/2n4b2fe4/x86/CMakeFiles/cmake.verify_globs	69b765cdecbd9ccd
+4	123	0	C:/Users/abhay/Downloads/BLEApp/android/app/.cxx/Debug/2n4b2fe4/x86/CMakeFiles/cmake.verify_globs	69b765cdecbd9ccd
+3	140	0	C:/Users/abhay/Downloads/BLEApp/android/app/.cxx/Debug/2n4b2fe4/x86/CMakeFiles/cmake.verify_globs	69b765cdecbd9ccd

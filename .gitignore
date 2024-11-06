@@ -1,0 +1,7 @@
+node_modules
+
+
+# Ignore build artifacts and APKs
+android/app/build/
+*.apk
+*.so
