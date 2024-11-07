@@ -29,17 +29,7 @@ import { wrap } from 'module';
 
 const BLEScanner = () => {
   const [bleManager] = useState(new BleManager());
-  const [devices, setDevices] = useState([
-    {
-  name: 'BLE Beacon A', // Default name or fallback to 'Unnamed device'
-  macAddress: '00:A0:C9:14:C8:29', // Example MAC address
-  rssi: -70, // Example RSSI value indicating signal strength
-  payloadDataHex: '1a2b3c4d5e6f1a2b3c4d5e6f1a2b3c4d5e6f1a2b3c4d5e6f', // Example hexadecimal payload data
-  latitude: 37.7749, // Example latitude (San Francisco)
-  longitude: -122.4194, // Example longitude (San Francisco)
-  timestamp: new Date().toISOString() // Current time in ISO format
-}
-  ]);
+  const [devices, setDevices] = useState([]);
 
   useEffect(() => {
     if (Platform.OS === 'android') {
@@ -82,7 +72,8 @@ const BLEScanner = () => {
   // Function to start scanning for BLE devices
   const startScan = () => {
     console.log('Starting BLE scan...');
-    const timestamp = formatDateTime(new Date().toISOString());
+    // const timestamp = new Date().toISOString();
+    const timestamp = formatDateTime();
 
     bleManager.startDeviceScan(null, null, (error, device) => {
       if (error) {
@@ -136,8 +127,8 @@ const BLEScanner = () => {
     });
   };
 
-  function formatDateTime(isoString) {
-    const date = new Date(isoString);
+  function formatDateTime() {
+    const date = new Date();
     let hours = date.getHours();
     const minutes = date.getMinutes();
     const seconds = date.getSeconds();
