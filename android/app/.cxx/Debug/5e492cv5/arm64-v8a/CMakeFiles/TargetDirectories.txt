@@ -1,0 +1,6 @@
+C:/Users/abhay/Downloads/BLEApp/android/app/.cxx/Debug/5e492cv5/arm64-v8a/CMakeFiles/appmodules.dir
+C:/Users/abhay/Downloads/BLEApp/android/app/.cxx/Debug/5e492cv5/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/Users/abhay/Downloads/BLEApp/android/app/.cxx/Debug/5e492cv5/arm64-v8a/CMakeFiles/rebuild_cache.dir
+C:/Users/abhay/Downloads/BLEApp/android/app/.cxx/Debug/5e492cv5/arm64-v8a/BlePlx_autolinked_build/CMakeFiles/react_codegen_BlePlx.dir
+C:/Users/abhay/Downloads/BLEApp/android/app/.cxx/Debug/5e492cv5/arm64-v8a/BlePlx_autolinked_build/CMakeFiles/edit_cache.dir
+C:/Users/abhay/Downloads/BLEApp/android/app/.cxx/Debug/5e492cv5/arm64-v8a/BlePlx_autolinked_build/CMakeFiles/rebuild_cache.dir

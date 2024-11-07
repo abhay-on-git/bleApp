@@ -13,10 +13,33 @@ import {
   SafeAreaView,
 } from 'react-native';
 import { BleManager } from 'react-native-ble-plx';
+import { wrap } from 'module';
+
+
+// Dummy Device for testing the UI
+// {
+//   name: 'BLE Beacon A', // Default name or fallback to 'Unnamed device'
+//   macAddress: '00:A0:C9:14:C8:29', // Example MAC address
+//   rssi: -70, // Example RSSI value indicating signal strength
+//   payloadDataHex: '1a2b3c4d5e6f1a2b3c4d5e6f1a2b3c4d5e6f1a2b3c4d5e6f', // Example hexadecimal payload data
+//   latitude: 37.7749, // Example latitude (San Francisco)
+//   longitude: -122.4194, // Example longitude (San Francisco)
+//   timestamp: new Date().toISOString() // Current time in ISO format
+// }
 
 const BLEScanner = () => {
   const [bleManager] = useState(new BleManager());
-  const [devices, setDevices] = useState([]);
+  const [devices, setDevices] = useState([
+    {
+  name: 'BLE Beacon A', // Default name or fallback to 'Unnamed device'
+  macAddress: '00:A0:C9:14:C8:29', // Example MAC address
+  rssi: -70, // Example RSSI value indicating signal strength
+  payloadDataHex: '1a2b3c4d5e6f1a2b3c4d5e6f1a2b3c4d5e6f1a2b3c4d5e6f', // Example hexadecimal payload data
+  latitude: 37.7749, // Example latitude (San Francisco)
+  longitude: -122.4194, // Example longitude (San Francisco)
+  timestamp: new Date().toISOString() // Current time in ISO format
+}
+  ]);
 
   useEffect(() => {
     if (Platform.OS === 'android') {
@@ -59,7 +82,7 @@ const BLEScanner = () => {
   // Function to start scanning for BLE devices
   const startScan = () => {
     console.log('Starting BLE scan...');
-    const timestamp = new Date().toISOString();
+    const timestamp = formatDateTime(new Date().toISOString());
 
     bleManager.startDeviceScan(null, null, (error, device) => {
       if (error) {
@@ -74,10 +97,8 @@ const BLEScanner = () => {
         let payloadDataHex = null;
         if (device.manufacturerData) {
           const payloadDataBuffer = Buffer.from(device.manufacturerData, 'base64');
-          payloadDataHex = payloadDataBuffer.toString('hex');
+          payloadDataHex = payloadDataBuffer.toString('hex').toUpperCase();
         }
-
-        // const payloadData = device.manufacturerData || device.serviceData;
 
         // If you want to capture location from the mobile device:
         Geolocation.getCurrentPosition(
@@ -91,73 +112,144 @@ const BLEScanner = () => {
               latitude,
               longitude,
               timestamp
-            }
-            setDevices([...devices , newDevice])
-            console.log(
-              'Found Google device:',
-              {
-                name: device.name || 'Unnamed device',
-                macAddress,
-                rssi,
-                payloadDataHex, // Decode if necessary
-                latitude,
-                longitude,
-                timestamp
+            };
+
+            // Check if device already exists
+            setDevices(prevDevices => {
+              const deviceExists = prevDevices.some(dev => dev.macAddress === newDevice.macAddress);
+              if (!deviceExists) {
+                return [...prevDevices, newDevice];
+              } else {
+                // Optionally update existing device data
+                return prevDevices.map(dev =>
+                  dev.macAddress === newDevice.macAddress ? newDevice : dev
+                );
               }
-            );
+            });
           },
-          error => console.error('Location Error:', error),
+          error => {
+            console.error('Location Error:', error);
+          },
           { enableHighAccuracy: true, timeout: 10000, maximumAge: 1000 }
         );
       }
     });
   };
 
+  function formatDateTime(isoString) {
+    const date = new Date(isoString);
+    let hours = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const year = date.getFullYear();
+  
+    const formattedDate = [
+      month.toString().padStart(2, '0'),
+      day.toString().padStart(2, '0'),
+      year
+    ].join('/');
+  
+    const formattedTime = [
+      hours.toString().padStart(2, '0'),
+      minutes.toString().padStart(2, '0'),
+      seconds.toString().padStart(2, '0')
+    ].join(':');
+  
+    return `${formattedDate} ${formattedTime} ${ampm}`;
+  }
+  
 
   // Function to render the signal strength as a progress bar
-  const renderSignalStrengthMeter = rssi => {
-    if (rssi == null) return null;
+  // const renderSignalStrengthMeter = rssi => {
+  //   if (rssi == null) return null;
 
-    const strength =
-      rssi > -20
-        ? 6
-        : rssi > -40
-          ? 5
-          : rssi > -60
-            ? 4
-            : rssi > -80
-              ? 3
-              : rssi > -100
-                ? 2
-                : 1; // 4 bars for strong, 3 for medium, 2 for weak, 1 for very weak
+  //   const strength =
+  //     rssi > -20
+  //       ? 6
+  //       : rssi > -40
+  //         ? 5
+  //         : rssi > -60
+  //           ? 4
+  //           : rssi > -80
+  //             ? 3
+  //             : rssi > -100
+  //               ? 2
+  //               : 1; // 4 bars for strong, 3 for medium, 2 for weak, 1 for very weak
 
-    return (
-      <View style={styles.signalStrengthContainer}>
-        <Text style={styles.signalStrengthText}>Signal Strength:</Text>
-        <View style={styles.signalBars}>
-          {[...Array(6)].map((_, index) => (
-            <View
-              key={index}
-              style={[
-                styles.signalBar,
-                {
-                  backgroundColor: index < strength ? '#4CAF50' : '#E0E0E0',
-                },
-              ]}
-            />
-          ))}
+  //   return (
+  //     <View style={styles.signalStrengthContainer}>
+  //       <Text style={styles.signalStrengthText}>Signal Strength:</Text>
+  //       <View style={styles.signalBars}>
+  //         {[...Array(6)].map((_, index) => (
+  //           <View
+  //             key={index}
+  //             style={[
+  //               styles.signalBar,
+  //               {
+  //                 backgroundColor: index < strength ? '#4CAF50' : '#E0E0E0',
+  //               },
+  //             ]}
+  //           />
+  //         ))}
+  //       </View>
+  //     </View>
+  //   );
+  // };
+
+  // const renderDevice = ({ item }) => (
+  //   <View style={styles.deviceContainer}>
+  //     <Text style={styles.deviceName}>{item.name || 'Unnamed Device'}</Text>
+  //     <Text style={styles.deviceId}>ID: {item.id}</Text>
+  //     <Text>{item.rssi}</Text>
+  //     {renderSignalStrengthMeter(item.rssi)}{' '}
+  //     {/* Display the signal strength meter */}
+  //   </View>
+  // );
+
+  const renderBleDevice = ({ item }) => (
+    <View style={styles.infoCard}>
+      <View style={styles.infoContainer}>
+        <View style={styles.infoChild}>
+          <Text style={styles.infoTitle}>Name</Text>
+          <Text style={styles.separator}>:</Text>
+          <Text style={styles.infoValue}>{item.name || 'Unnamed Device'}</Text>
+        </View>
+        <View style={styles.infoChild}>
+          <Text style={styles.infoTitle}>MAC address</Text>
+          <Text style={styles.separator}>:</Text>
+          <Text style={styles.infoValue}>{item.macAddress}</Text>
+        </View>
+        <View style={styles.infoChild}>
+          <Text style={styles.infoTitle}>Payload Data</Text>
+          <Text style={styles.separator}>:</Text>
+          <Text style={styles.infoValue}>{item.payloadDataHex}</Text>
+        </View>
+        <View style={styles.infoChild}>
+          <Text style={styles.infoTitle}>Latitude</Text>
+          <Text style={styles.separator}>:</Text>
+          <Text style={styles.infoValue}>{item.latitude}</Text>
+        </View>
+        <View style={styles.infoChild}>
+          <Text style={styles.infoTitle}>Longitude</Text>
+          <Text style={styles.separator}>:</Text>
+          <Text style={styles.infoValue}>{item.longitude}</Text>
+        </View>
+        <View style={styles.infoChild}>
+          <Text style={styles.infoTitle}>Timestamp</Text>
+          <Text style={styles.separator}>:</Text>
+          <Text style={styles.infoRssi}>{item.timestamp}</Text>
+        </View>
+        <View style={styles.infoChild}>
+          <Text style={styles.infoTitle}>RSSI</Text>
+          <Text style={styles.separator}>:</Text>
+          <Text style={styles.infoRssi}>{item.rssi} dBm</Text>
         </View>
       </View>
-    );
-  };
-
-  const renderDevice = ({ item }) => (
-    <View style={styles.deviceContainer}>
-      <Text style={styles.deviceName}>{item.name || 'Unnamed Device'}</Text>
-      <Text style={styles.deviceId}>ID: {item.id}</Text>
-      <Text>{item.rssi}</Text>
-      {renderSignalStrengthMeter(item.rssi)}{' '}
-      {/* Display the signal strength meter */}
     </View>
   );
 
@@ -168,7 +260,7 @@ const BLEScanner = () => {
         <FlatList
           data={devices}
           keyExtractor={item => item.id}
-          renderItem={renderDevice}
+          renderItem={renderBleDevice}
           ListEmptyComponent={
             <Text style={styles.noDevices}>No Google devices found.</Text>
           }
@@ -183,10 +275,74 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
   },
+
+  infoCard: {
+    flex: 1,
+    // height:"auto",
+    borderBottomWidth: 0.8,
+    borderColor: 'black',
+    padding: 9,
+  },
+
+  infoContainer: {
+    flex: 1,
+    width: '100%',
+    marginVertical: 1,
+    padding: 15,
+    backgroundColor: '#FFF',
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  infoChild: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginVertical: 4,
+  },
+  infoTitle: {
+    fontSize: 13,
+    color: '#333',
+    fontWeight:'500',
+    flex: 1,
+    textAlign: 'left',
+  },
+  separator: {
+    fontSize: 13,
+    color: '#333',
+    paddingHorizontal: 5,
+  },
+  infoValue: {
+    paddingLeft: 6,
+    fontSize: 13,
+    fontWeight:'600',
+    color: '#333',
+    flex: 2,
+    textAlign: 'left',
+  },
+  infoRssi: {
+    paddingLeft: 6,
+    fontSize: 13,
+    fontWeight:'600',
+    color: '#e5622f',
+    flex: 2,
+    textAlign: 'left',
+  },
+
+
+
+
+
+
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: '#F0F4F8',
+    borderBottomColor: '#000',
+    backgroundColor: '#FFFFFF',
   },
   header: {
     fontSize: 24,
