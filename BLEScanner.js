@@ -11,6 +11,7 @@ import {
   FlatList,
   StyleSheet,
   SafeAreaView,
+  Image,
 } from 'react-native';
 import { BleManager } from 'react-native-ble-plx';
 import { wrap } from 'module';
@@ -247,7 +248,10 @@ const BLEScanner = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        <Text style={styles.header}>BLE Devices Scanned:</Text>
+        <View style={styles.header}>
+        <Image style={styles.img} source={require('./chorus.png')} alt='logo'/>
+        <Text style={styles.title}>iOS Reader</Text>
+        </View>
         <FlatList
           data={devices}
           keyExtractor={item => item.id}
@@ -265,12 +269,13 @@ const BLEScanner = () => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
+    backgroundColor: '#1f2137'
   },
 
   infoCard: {
     flex: 1,
     // height:"auto",
-    borderBottomWidth: 0.8,
+    borderBottomWidth: 0.9,
     borderColor: 'black',
     padding: 9,
   },
@@ -278,7 +283,7 @@ const styles = StyleSheet.create({
   infoContainer: {
     flex: 1,
     width: '100%',
-    marginVertical: 1,
+    marginVertical: 0.7,
     padding: 15,
     backgroundColor: '#FFF',
     borderRadius: 6,
@@ -325,22 +330,32 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
 
-
-
-
-
-
+  img :{
+    width: 120,
+    height: 60,
+    resizeMode:'cover'
+  },
+  title:{
+    fontSize: 16,
+    color: '#FFFFFF',
+    textAlign:'left',
+    fontWeight:'600',
+    // backgroundColor:'red',
+    marginTop:7,
+    marginLeft:-9,
+  },
   container: {
     flex: 1,
     borderBottomColor: '#000',
     backgroundColor: '#FFFFFF',
   },
   header: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center',
-    color: '#333',
+    width:"100%",
+    marginBottom: 2,
+    flexDirection:'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#1f2137'
   },
   noDevices: {
     textAlign: 'center',
